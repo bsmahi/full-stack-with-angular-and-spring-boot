@@ -1,7 +1,7 @@
 import { TodoDataService } from './../service/data/todo-data.service';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import { Router } from '@angular/router';
-import { NgIf, NgFor, UpperCasePipe, DatePipe } from '@angular/common';
+import { UpperCasePipe, DatePipe } from '@angular/common';
 
 export class Todo {
   constructor(
@@ -19,32 +19,16 @@ export class Todo {
     templateUrl: './list-todos.component.html',
     styleUrls: ['./list-todos.component.css'],
     standalone: true,
-    imports: [NgIf, NgFor, UpperCasePipe, DatePipe]
+    imports: [UpperCasePipe, DatePipe]
 })
 export class ListTodosComponent implements OnInit {
+  private todoService = inject(TodoDataService);
+  private router = inject(Router);
+
 
   todos: Todo[] = [];
 
   message: string = '';
-
-  // = [
-  //   new Todo(1, 'Learn to Dance', false, new Date()),
-  //   new Todo(2, 'Become an Expert at Angular', false, new Date()),
-  //   new Todo(3, 'Visit India', false, new Date())
-  //   // {id : 1, description : },
-  //   // {id : 2, description : ''},
-  //   // {id : 3, description : 'Visit India'}
-  // ]
-
-  // todo = {
-  //     id : 1,
-  //     description: 'Learn to Dance'
-  // }
-
-  constructor(
-    private todoService: TodoDataService,
-    private router: Router
-  ) { }
 
   ngOnInit() {
     this.refreshTodos();

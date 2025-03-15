@@ -1,15 +1,13 @@
 import { BasicAuthenticationService } from './../basic-authentication.service';
 import { HttpInterceptor, HttpHandler, HttpRequest } from '@angular/common/http';
-import { Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 
 @Injectable({
   providedIn: 'root'
 })
 export class HttpIntercepterBasicAuthService implements HttpInterceptor{
+  private basicAuthenticationService = inject(BasicAuthenticationService);
 
-  constructor(
-    private basicAuthenticationService : BasicAuthenticationService
-  ) { }
 
   intercept(request: HttpRequest<any>, next: HttpHandler){
     // let username = 'in28minutes'

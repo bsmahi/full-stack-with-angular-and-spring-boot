@@ -3,8 +3,8 @@ import { ActivatedRoute, RouterLink } from '@angular/router';
 //package com.in28minutes.springboot.web;
 
 //import org.springframework.boot.SpringApplication;
-import { Component, OnInit } from '@angular/core';//'./app.component';
-import { NgIf } from '@angular/common';
+import { Component, OnInit, inject } from '@angular/core';//'./app.component';
+
 //import { AppComponent } from '../app.component';
 
 //@ComponentScan(
@@ -14,25 +14,18 @@ import { NgIf } from '@angular/common';
     templateUrl: './welcome.component.html',
     styleUrls: ['./welcome.component.css'],
     standalone: true,
-    imports: [RouterLink, NgIf]
+    imports: [RouterLink]
 })
 
 //public class SpringBootFirstWebApplication implements SomeInterface{
 export class WelcomeComponent implements OnInit {
+  private route = inject(ActivatedRoute);
+  private service = inject(WelcomeDataService);
+
 
   message = 'Some Welcome Message'
   welcomeMessageFromService: string = ''
   name = ''
-  //String message = "Some Welcome Message"
-
-  //public SpringBootFirstWebApplication() {	
-
-  //ActivatedRoute
-  constructor(
-    private route: ActivatedRoute,
-    private service: WelcomeDataService) {
-
-  }
 
   // void init() {
   ngOnInit() {

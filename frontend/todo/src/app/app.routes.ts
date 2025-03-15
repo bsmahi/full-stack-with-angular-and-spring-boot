@@ -1,20 +1,14 @@
-import { TodoComponent } from './todo/todo.component';
 import { RouteGuardService } from './service/route-guard.service';
-import { LogoutComponent } from './logout/logout.component';
-import { ListTodosComponent } from './list-todos/list-todos.component';
-import { WelcomeComponent } from './welcome/welcome.component';
 import { Routes } from '@angular/router';
-import { LoginComponent } from './login/login.component';
-import { ErrorComponent } from './error/error.component';
 
 // welcome 
 export const routes: Routes = [
-  { path: '', component: LoginComponent  },//canActivate, RouteGuardService
-  { path: 'login', component: LoginComponent },
-  { path: 'welcome/:name', component: WelcomeComponent, canActivate:[RouteGuardService]},
-  { path: 'todos', component: ListTodosComponent, canActivate:[RouteGuardService] },
-  { path: 'logout', component: LogoutComponent, canActivate:[RouteGuardService] },
-  { path: 'todos/:id', component: TodoComponent, canActivate:[RouteGuardService] },
+  { path: '', loadComponent: () => import('./login/login.component').then(m => m.LoginComponent)  },//canActivate, RouteGuardService
+  { path: 'login', loadComponent: () => import('./login/login.component').then(m => m.LoginComponent) },
+  { path: 'welcome/:name', loadComponent: () => import('./welcome/welcome.component').then(m => m.WelcomeComponent), canActivate:[RouteGuardService]},
+  { path: 'todos', loadComponent: () => import('./list-todos/list-todos.component').then(m => m.ListTodosComponent), canActivate:[RouteGuardService] },
+  { path: 'logout', loadComponent: () => import('./logout/logout.component').then(m => m.LogoutComponent), canActivate:[RouteGuardService] },
+  { path: 'todos/:id', loadComponent: () => import('./todo/todo.component').then(m => m.TodoComponent), canActivate:[RouteGuardService] },
 
-  { path: '**', component: ErrorComponent }
+  { path: '**', loadComponent: () => import('./error/error.component').then(m => m.ErrorComponent) }
 ];
